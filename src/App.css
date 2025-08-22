@@ -1,0 +1,298 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
+  font-weight: 400;
+  overflow: hidden;
+}
+
+body {
+  background: transparent;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.drag-handle {
+  height: 32px;
+  background: rgba(248, 250, 252, 0.8);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  cursor: move;
+  user-select: none;
+  -webkit-app-region: drag;
+}
+
+.app-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: -0.01em;
+}
+
+.settings-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: no-drag;
+}
+
+.settings-button:hover {
+  background: rgba(100, 116, 139, 0.1);
+  color: #475569;
+}
+
+.content-area {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notes-textarea {
+  flex: 1;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1e293b;
+  placeholder-color: #94a3b8;
+}
+
+.notes-textarea::placeholder {
+  color: #94a3b8;
+}
+
+.notes-textarea:focus {
+  outline: none;
+}
+
+.settings-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  z-index: 10;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.settings-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background: rgba(100, 116, 139, 0.1);
+  color: #475569;
+}
+
+.settings-content {
+  flex: 1;
+}
+
+.setting-group {
+  margin-bottom: 20px;
+}
+
+.setting-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.setting-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 6px;
+  background: rgba(248, 250, 252, 0.5);
+  font-family: inherit;
+  font-size: 13px;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.setting-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.save-button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-button:hover {
+  background: #2563eb;
+}
+
+.save-button:active {
+  background: #1d4ed8;
+}
+
+.shortcut-help {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+kbd {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #e2e8f0;
+  }
+
+  .app-container {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(51, 65, 85, 0.3);
+  }
+
+  .drag-handle {
+    background: rgba(30, 41, 59, 0.8);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+  }
+
+  .app-title {
+    color: #94a3b8;
+  }
+
+  .settings-button {
+    color: #94a3b8;
+  }
+
+  .settings-button:hover {
+    background: rgba(148, 163, 184, 0.1);
+    color: #cbd5e1;
+  }
+
+  .notes-textarea {
+    color: #e2e8f0;
+  }
+
+  .notes-textarea::placeholder {
+    color: #64748b;
+  }
+
+  .settings-panel {
+    background: rgba(15, 23, 42, 0.98);
+  }
+
+  .settings-title {
+    color: #e2e8f0;
+  }
+
+  .close-button {
+    color: #94a3b8;
+  }
+
+  .close-button:hover {
+    background: rgba(148, 163, 184, 0.1);
+    color: #cbd5e1;
+  }
+
+  .setting-label {
+    color: #cbd5e1;
+  }
+
+  .setting-input {
+    border: 1px solid rgba(51, 65, 85, 0.8);
+    background: rgba(30, 41, 59, 0.5);
+    color: #e2e8f0;
+  }
+
+  .setting-input:focus {
+    border-color: #3b82f6;
+    background: rgba(51, 65, 85, 0.8);
+  }
+
+  .shortcut-help {
+    color: #94a3b8;
+  }
+}

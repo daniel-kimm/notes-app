@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Allow window management and overlay capabilities -->
+    <key>com.apple.security.window-manager</key>
+    <true/>
+    
+    <!-- Allow window server access for high-level windows -->
+    <key>com.apple.security.window-server</key>
+    <true/>
+    
+    <!-- Allow accessibility for window overlay -->
+    <key>com.apple.security.accessibility</key>
+    <true/>
+    
+    <!-- Allow interaction with other apps -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+    
+    <!-- Disable sandboxing that might interfere with overlay -->
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+    
+    <!-- Allow network access -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    
+    <!-- Allow reading/writing user data -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+</dict>
+</plist>
