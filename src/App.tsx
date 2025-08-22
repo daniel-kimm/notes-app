@@ -71,6 +71,7 @@ function App() {
   if (isLoading) {
     return (
       <div className="app-container">
+        <div className="glass-reflection"></div>
         <div className="drag-handle" data-tauri-drag-region onMouseDown={handleDragStart}>
           <span className="app-title">Notes</span>
         </div>
@@ -85,6 +86,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="glass-reflection"></div>
       <div className="drag-handle" data-tauri-drag-region onMouseDown={handleDragStart}>
         <span className="app-title">Notes</span>
         <button 

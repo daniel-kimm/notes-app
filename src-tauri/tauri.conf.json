@@ -10,6 +10,7 @@
     "frontendDist": "../dist"
   },
   "app": {
+    "macOSPrivateApi": true,
     "windows": [
       {
         "title": "Notes",
@@ -23,7 +24,7 @@
         "alwaysOnTop": true,
         "skipTaskbar": true,
         "transparent": true,
-        "shadow": true,
+        "shadow": false,
         "visibleOnAllWorkspaces": true,
         "fullscreen": false,
         "x": -340,

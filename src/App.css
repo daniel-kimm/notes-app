@@ -6,6 +6,12 @@
   box-sizing: border-box;
 }
 
+*:not(.app-container):not(.drag-handle):not(.glass-reflection):not(
+    .settings-panel
+  ) {
+  background: transparent !important;
+}
+
 html,
 body,
 #root {
@@ -15,40 +21,76 @@ body,
     sans-serif;
   font-weight: 400;
   overflow: hidden;
+  background: transparent !important;
+  border-radius: 32px;
+}
+
+html {
+  border-radius: 32px;
+  overflow: hidden;
+}
+
+#root {
+  border-radius: 32px;
+  overflow: hidden;
 }
 
 body {
-  background: transparent;
+  background: transparent !important;
   color: #1a1a1a;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  border-radius: 32px;
+  overflow: hidden;
 }
 
 .app-container {
   width: 100%;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(30px) saturate(200%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
 }
 
+/* Glass reflection overlay */
+.glass-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    transparent 100%
+  );
+  border-radius: 32px 32px 0 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .drag-handle {
-  height: 32px;
-  background: rgba(248, 250, 252, 0.8);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+  height: 48px;
+  background: transparent;
+  border-bottom: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 12px 16px 0 16px;
   cursor: move;
   user-select: none;
   -webkit-app-region: drag;
+  position: relative;
+  z-index: 2;
 }
 
 .app-title {
@@ -79,7 +121,7 @@ body {
 
 .content-area {
   flex: 1;
-  padding: 16px;
+  padding: 0 16px 16px 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -113,13 +155,23 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  backdrop-filter: blur(40px) saturate(180%);
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   padding: 20px;
   z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .settings-header {
@@ -230,13 +282,17 @@ kbd {
   }
 
   .app-container {
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(51, 65, 85, 0.3);
+    background: rgba(15, 23, 42, 0.3) !important;
+    border: 1px solid rgba(51, 65, 85, 0.12);
   }
 
   .drag-handle {
-    background: rgba(30, 41, 59, 0.8);
-    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    background: linear-gradient(
+      180deg,
+      rgba(30, 41, 59, 0.12) 0%,
+      rgba(30, 41, 59, 0.04) 100%
+    );
+    border-bottom: 1px solid rgba(51, 65, 85, 0.08);
   }
 
   .app-title {
@@ -261,7 +317,23 @@ kbd {
   }
 
   .settings-panel {
-    background: rgba(15, 23, 42, 0.98);
+    background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.3) 0%,
+      rgba(15, 23, 42, 0.2) 25%,
+      rgba(15, 23, 42, 0.15) 50%,
+      rgba(15, 23, 42, 0.2) 75%,
+      rgba(15, 23, 42, 0.25) 100%
+    );
+  }
+
+  .glass-reflection {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      transparent 100%
+    );
   }
 
   .settings-title {
