@@ -140,35 +140,35 @@ function App() {
             onClick={formatBold}
             title="Bold"
           >
-            <Bold size={16} />
+            <Bold size={14} />
           </button>
           <button 
             className="format-button"
             onClick={formatItalic}
             title="Italic"
           >
-            <Italic size={16} />
+            <Italic size={14} />
           </button>
           <button 
             className="format-button"
             onClick={formatUnderline}
             title="Underline"
           >
-            <Underline size={16} />
+            <Underline size={14} />
           </button>
           <button 
             className="format-button"
             onClick={formatChecklist}
             title="Checklist"
           >
-            <CheckSquare size={16} />
+            <CheckSquare size={14} />
           </button>
           <button 
             className="format-button"
             onClick={formatBulletPoint}
             title="Bullet Point"
           >
-            <List size={16} />
+            <List size={14} />
           </button>
         </div>
       )}
@@ -189,7 +189,7 @@ function App() {
               onClick={() => setShowInfo(false)}
               title="Close"
             >
-              <X size={16} />
+              <X size={14} />
             </button>
           </div>
           

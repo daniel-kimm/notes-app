@@ -349,7 +349,7 @@ body {
 }
 
 .info-title {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 600;
   color: #ffffff !important;
 }
@@ -383,6 +383,7 @@ body {
 
 .info-content {
   flex: 1;
+  font-size: 12px;
 }
 
 .info-group {
