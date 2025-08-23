@@ -1,34 +1,63 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { Info, X } from "lucide-react";
+import { Info, X, Type, Bold, Italic, Underline, CheckSquare, List } from "lucide-react";
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
+import Placeholder from '@tiptap/extension-placeholder';
 import "./App.css";
 
 function App() {
-  const [noteContent, setNoteContent] = useState("");
   const [showInfo, setShowInfo] = useState(false);
+  const [showToolbar, setShowToolbar] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Initialize TipTap editor
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
+      Placeholder.configure({
+        placeholder: 'Start typing your notes...',
+      }),
+    ],
+    content: '',
+    onUpdate: ({ editor }) => {
+      const text = editor.getText();
+      // Auto-save after typing stops
+      debouncedSave(text);
+    },
+  });
+
+  // Debounced save function
+  const debouncedSave = debounce((content: string) => {
+    saveNote(content);
+  }, 500);
+
   useEffect(() => {
-    // Load existing note content on startup
     loadNote();
   }, []);
-
-  useEffect(() => {
-    // Auto-save note content after typing stops
-    const timeoutId = setTimeout(() => {
-      if (noteContent !== undefined) {
-        saveNote();
-      }
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  }, [noteContent]);
 
   const loadNote = async () => {
     try {
       const content = await invoke<string>("load_note");
-      setNoteContent(content);
+      
+      // Set content in TipTap editor
+      if (editor && content) {
+        // Convert plain text to basic HTML
+        const htmlContent = content.replace(/\n/g, '<br>');
+        editor.commands.setContent(htmlContent);
+      }
+      
+      // Focus editor
+      setTimeout(() => {
+        editor?.commands.focus();
+      }, 100);
     } catch (error) {
       console.error("Failed to load note:", error);
     } finally {
@@ -36,9 +65,9 @@ function App() {
     }
   };
 
-  const saveNote = async () => {
+  const saveNote = async (content: string) => {
     try {
-      await invoke("save_note", { content: noteContent });
+      await invoke("save_note", { content });
     } catch (error) {
       console.error("Failed to save note:", error);
     }
@@ -49,24 +78,21 @@ function App() {
     await window.startDragging();
   };
 
-  const forceWindowOnTop = async () => {
-    try {
-      await invoke("force_window_on_top");
-      console.log("Forced window on top");
-    } catch (error) {
-      console.error("Failed to force window on top:", error);
-    }
-  };
+  // TipTap formatting functions
+  const formatBold = () => editor?.chain().focus().toggleBold().run();
+  const formatItalic = () => editor?.chain().focus().toggleItalic().run();
+  const formatUnderline = () => editor?.chain().focus().toggleUnderline().run();
+  const formatBulletPoint = () => editor?.chain().focus().toggleBulletList().run();
+  const formatChecklist = () => editor?.chain().focus().toggleTaskList().run();
 
-  const debugWindowInfo = async () => {
-    try {
-      const info = await invoke<string>("debug_window_info");
-      console.log("Window Debug Info:\n", info);
-      alert("Debug info logged to console:\n\n" + info);
-    } catch (error) {
-      console.error("Failed to get debug info:", error);
-    }
-  };
+  // Debounce utility function
+  function debounce<T extends (...args: any[]) => any>(func: T, delay: number): T {
+    let timeoutId: number | undefined;
+    return ((...args: any[]) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(null, args), delay);
+    }) as T;
+  }
 
   if (isLoading) {
     return (
@@ -89,22 +115,68 @@ function App() {
       <div className="glass-reflection"></div>
       <div className="drag-handle" data-tauri-drag-region onMouseDown={handleDragStart}>
         <span className="app-title">Notes</span>
-        <button 
-          className="info-button"
-          onClick={() => setShowInfo(true)}
-          title="Info"
-        >
-          <Info size={14} />
-        </button>
+        <div className="toolbar-buttons">
+          <button 
+            className="toolbar-button"
+            onClick={() => setShowToolbar(!showToolbar)}
+            title="Formatting Toolbar"
+          >
+            <Type size={14} />
+          </button>
+          <button 
+            className="info-button"
+            onClick={() => setShowInfo(true)}
+            title="Info"
+          >
+            <Info size={14} />
+          </button>
+        </div>
       </div>
       
+      {showToolbar && (
+        <div className="formatting-toolbar">
+          <button 
+            className="format-button"
+            onClick={formatBold}
+            title="Bold"
+          >
+            <Bold size={16} />
+          </button>
+          <button 
+            className="format-button"
+            onClick={formatItalic}
+            title="Italic"
+          >
+            <Italic size={16} />
+          </button>
+          <button 
+            className="format-button"
+            onClick={formatUnderline}
+            title="Underline"
+          >
+            <Underline size={16} />
+          </button>
+          <button 
+            className="format-button"
+            onClick={formatChecklist}
+            title="Checklist"
+          >
+            <CheckSquare size={16} />
+          </button>
+          <button 
+            className="format-button"
+            onClick={formatBulletPoint}
+            title="Bullet Point"
+          >
+            <List size={16} />
+          </button>
+        </div>
+      )}
+      
       <div className="content-area">
-        <textarea
-          className="notes-textarea"
-          value={noteContent}
-          onChange={(e) => setNoteContent(e.target.value)}
-          placeholder="Start typing your notes..."
-          autoFocus
+        <EditorContent 
+          editor={editor} 
+          className="notes-editor"
         />
       </div>
 

@@ -12,6 +12,12 @@
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
     "@tauri-apps/api": "^2.8.0",
+    "@tiptap/extension-placeholder": "^3.3.0",
+    "@tiptap/extension-task-item": "^3.3.0",
+    "@tiptap/extension-task-list": "^3.3.0",
+    "@tiptap/pm": "^3.3.0",
+    "@tiptap/react": "^3.3.0",
+    "@tiptap/starter-kit": "^3.3.0",
     "liquid-glass-react": "^1.1.1",
     "lucide-react": "^0.541.0",
     "react": "^19.1.0",

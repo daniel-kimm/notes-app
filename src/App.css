@@ -6,9 +6,7 @@
   box-sizing: border-box;
 }
 
-*:not(.app-container):not(.drag-handle):not(
-    .info-panel
-  ):not(.info-panel *) {
+*:not(.app-container):not(.drag-handle):not(.info-panel):not(.info-panel *) {
   background: transparent !important;
 }
 
@@ -103,6 +101,83 @@ body {
   color: #475569;
 }
 
+.toolbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  -webkit-app-region: no-drag;
+}
+
+.toolbar-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: no-drag;
+}
+
+.toolbar-button:hover {
+  background: rgba(100, 116, 139, 0.1);
+  color: #475569;
+}
+
+.formatting-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(248, 250, 252, 0.6);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.4);
+  backdrop-filter: blur(10px);
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.format-button {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #475569;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.format-button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #cbd5e1;
+  color: #334155;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.format-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
 .content-area {
   flex: 1;
   padding: 0 16px 16px 16px;
@@ -113,26 +188,141 @@ body {
   border-top: none;
 }
 
-.notes-textarea {
+.notes-editor {
   flex: 1;
   width: 100%;
   background: transparent;
   border: none;
   outline: none;
-  resize: none;
   font-family: inherit;
   font-size: 14px;
   line-height: 1.5;
   color: #1e293b;
-  placeholder-color: #94a3b8;
+  font-weight: 400;
+  min-height: 200px;
+  padding: 0;
+  overflow-y: auto;
 }
 
-.notes-textarea::placeholder {
-  color: #94a3b8;
-}
-
-.notes-textarea:focus {
+/* TipTap Editor Content */
+.notes-editor .ProseMirror {
   outline: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 400;
+}
+
+.notes-editor .ProseMirror:focus {
+  outline: none;
+}
+
+/* Placeholder styling for TipTap */
+.notes-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #94a3b8;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Task List Styling */
+.notes-editor ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notes-editor ul[data-type="taskList"] li {
+  display: flex;
+  align-items: center;
+  margin: 0.2em 0;
+}
+
+.notes-editor ul[data-type="taskList"] li > label {
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+  user-select: none;
+}
+
+.notes-editor ul[data-type="taskList"] li > div {
+  flex: 1 1 auto;
+}
+
+.notes-editor ul[data-type="taskList"] input[type="checkbox"] {
+  cursor: pointer;
+  margin: 0;
+  width: 12px;
+  height: 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #cbd5e1;
+  border-radius: 4px;
+  background: #ffffff;
+  position: relative;
+  transition: all 0.2s ease;
+  vertical-align: middle;
+  margin-top: -1px;
+}
+
+.notes-editor ul[data-type="taskList"] input[type="checkbox"]:hover {
+  border-color: #94a3b8;
+}
+
+.notes-editor ul[data-type="taskList"] input[type="checkbox"]:checked {
+  background: #ffffff;
+  border-color: #475569;
+}
+
+.notes-editor ul[data-type="taskList"] input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000000;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Bullet List Styling */
+.notes-editor ul:not([data-type="taskList"]) {
+  padding-left: 1.2em;
+}
+
+.notes-editor ul:not([data-type="taskList"]) li {
+  list-style-type: disc;
+  margin: 0.2em 0;
+}
+
+/* General formatting */
+.notes-editor strong {
+  font-weight: 700;
+}
+
+.notes-editor em {
+  font-style: italic;
+}
+
+.notes-editor u {
+  text-decoration: underline;
+}
+
+.notes-editor p {
+  margin: 0.5em 0;
+}
+
+.notes-editor p:first-child {
+  margin-top: 0;
+}
+
+.notes-editor p:last-child {
+  margin-bottom: 0;
 }
 
 .info-panel {
@@ -325,13 +515,63 @@ kbd {
     color: #767676;
   }
 
-  .notes-textarea {
+  .toolbar-button {
     color: #222222;
-    font-weight: 800;
   }
 
-  .notes-textarea::placeholder {
+  .toolbar-button:hover {
+    background: rgba(148, 163, 184, 0.1);
+    color: #767676;
+  }
+
+  .formatting-toolbar {
+    background: rgba(248, 250, 252, 0.8);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  }
+
+  .format-button {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    color: #334155;
+  }
+
+  .format-button:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: #cbd5e1;
+    color: #1e293b;
+  }
+
+  .notes-editor {
+    color: #222222;
+    font-weight: 400;
+  }
+
+  .notes-editor .ProseMirror {
+    color: #222222;
+    font-weight: 400;
+  }
+
+  .notes-editor .ProseMirror p.is-editor-empty:first-child::before {
     color: #64748b;
+  }
+
+  /* Dark mode checkbox styling */
+  .notes-editor ul[data-type="taskList"] input[type="checkbox"] {
+    border-color: #475569;
+    background: #ffffff;
+  }
+
+  .notes-editor ul[data-type="taskList"] input[type="checkbox"]:hover {
+    border-color: #374151;
+  }
+
+  .notes-editor ul[data-type="taskList"] input[type="checkbox"]:checked {
+    background: #ffffff;
+    border-color: #1f2937;
+  }
+
+  .notes-editor ul[data-type="taskList"] input[type="checkbox"]:checked::after {
+    color: #000000;
   }
 
   .close-button {
