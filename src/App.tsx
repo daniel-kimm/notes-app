@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { Settings, X } from "lucide-react";
+import { Info, X } from "lucide-react";
 import "./App.css";
 
 function App() {
   const [noteContent, setNoteContent] = useState("");
-  const [showSettings, setShowSettings] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -90,11 +90,11 @@ function App() {
       <div className="drag-handle" data-tauri-drag-region onMouseDown={handleDragStart}>
         <span className="app-title">Notes</span>
         <button 
-          className="settings-button"
-          onClick={() => setShowSettings(true)}
-          title="Settings"
+          className="info-button"
+          onClick={() => setShowInfo(true)}
+          title="Info"
         >
-          <Settings size={14} />
+          <Info size={14} />
         </button>
       </div>
       
@@ -108,64 +108,25 @@ function App() {
         />
       </div>
 
-      {showSettings && (
-        <div className="settings-panel">
-          <div className="settings-header">
-            <h2 className="settings-title">Settings</h2>
+      {showInfo && (
+        <div className="info-panel">
+          <div className="info-header">
+            <h2 className="info-title">Info</h2>
             <button 
               className="close-button"
-              onClick={() => setShowSettings(false)}
+              onClick={() => setShowInfo(false)}
               title="Close"
             >
               <X size={16} />
             </button>
           </div>
           
-          <div className="settings-content">
-            <div className="setting-group">
+          <div className="info-content">
+            <div className="info-group">
               <p>This is a minimal notes app that stays on top of all windows, including fullscreen apps.</p>
               <p>Drag the title bar to move the window around.</p>
               <p>Your notes are automatically saved.</p>
-              <p><strong>Keyboard Shortcut:</strong> Press <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>`</kbd> once to hide, once more to show the app from anywhere.</p>
-            </div>
-            
-            <div className="setting-group">
-              <h3 style={{ fontSize: '14px', margin: '0 0 8px 0', fontWeight: '600' }}>Fullscreen Overlay</h3>
-              <p style={{ fontSize: '12px', margin: '0 0 8px 0', color: 'rgba(255,255,255,0.7)' }}>
-                If the app is not appearing over fullscreen applications, click the button below:
-              </p>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button 
-                  onClick={forceWindowOnTop}
-                  style={{
-                    padding: '6px 12px',
-                    backgroundColor: '#007AFF',
-                    border: 'none',
-                    borderRadius: '4px',
-                    color: 'white',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Force Window On Top
-                </button>
-                <button 
-                  onClick={debugWindowInfo}
-                  style={{
-                    padding: '6px 12px',
-                    backgroundColor: '#6B7280',
-                    border: 'none',
-                    borderRadius: '4px',
-                    color: 'white',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Debug Info
-                </button>
-              </div>
+              <p><strong>Keyboard Shortcut:</strong> Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>`</kbd> (Windows) or <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>`</kbd> (macOS) once to hide, once more to show the app from anywhere.</p>
             </div>
           </div>
         </div>
