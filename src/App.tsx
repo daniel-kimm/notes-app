@@ -99,7 +99,7 @@ function App() {
       <div className="app-container">
         <div className="glass-reflection"></div>
         <div className="drag-handle" data-tauri-drag-region onMouseDown={handleDragStart}>
-          <span className="app-title">Notes</span>
+          <span className="app-title">Float</span>
         </div>
         <div className="content-area">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
@@ -114,7 +114,7 @@ function App() {
     <div className="app-container">
       <div className="glass-reflection"></div>
       <div className="drag-handle" data-tauri-drag-region onMouseDown={handleDragStart}>
-        <span className="app-title">Notes</span>
+        <span className="app-title">Float</span>
         <div className="toolbar-buttons">
           <button 
             className="toolbar-button"
@@ -174,10 +174,18 @@ function App() {
       )}
       
       <div className="content-area">
-        <EditorContent 
-          editor={editor} 
-          className="notes-editor"
-        />
+        <div 
+          onFocus={(e) => e.stopPropagation()}
+          onBlur={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <EditorContent 
+            editor={editor} 
+            className="notes-editor"
+            onFocus={(e) => e.stopPropagation()}
+            onBlur={(e) => e.stopPropagation()}
+          />
+        </div>
       </div>
 
       {showInfo && (

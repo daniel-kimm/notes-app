@@ -152,8 +152,13 @@ async fn force_window_on_top(window: WebviewWindow) -> Result<(), String> {
                 NSWindowCollectionBehavior::NSWindowCollectionBehaviorStationary |
                 NSWindowCollectionBehavior::NSWindowCollectionBehaviorIgnoresCycle
             );
+            
+            // AGGRESSIVE FOCUS PREVENTION: Add more settings to prevent activation
+            panel.set_accepts_mouse_moved_events(true);
+            panel.set_becomes_key_only_if_needed(false);
+            
             panel.set_ignore_mouse_events(false);
-            println!("FORCED NSPANEL ON TOP WITH MAXIMUM LEVEL!");
+            println!("FORCED NSPANEL ON TOP WITH AGGRESSIVE FOCUS PREVENTION!");
         }
     }
     
@@ -237,10 +242,14 @@ pub fn run() {
                     NSWindowCollectionBehavior::NSWindowCollectionBehaviorIgnoresCycle
                 );
                 
+                // AGGRESSIVE FOCUS PREVENTION: Add more settings to prevent activation
+                panel.set_accepts_mouse_moved_events(true);
+                panel.set_becomes_key_only_if_needed(false);
+                
                 // Make panel not ignore mouse events
                 panel.set_ignore_mouse_events(false);
                 
-                println!("CONVERTED WINDOW TO NSPANEL FOR FULLSCREEN OVERLAY!");
+                println!("CONVERTED WINDOW TO NSPANEL WITH AGGRESSIVE FOCUS PREVENTION!");
             }
             
             let window_clone = window.clone();

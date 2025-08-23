@@ -851,6 +851,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "float-app"
+version = "0.1.0"
+dependencies = [
+ "cocoa 0.25.0",
+ "objc",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-nspanel",
+ "tauri-plugin-fs",
+ "tauri-plugin-global-shortcut",
+ "tokio",
+]
+
+[[package]]
 name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1980,22 +1996,6 @@ name = "nodrop"
 version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72ef4a56884ca558e5ddb05a1d1e7e1bfd9a68d9ed024c21704cc98872dae1bb"
-
-[[package]]
-name = "notes-app"
-version = "0.1.0"
-dependencies = [
- "cocoa 0.25.0",
- "objc",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-nspanel",
- "tauri-plugin-fs",
- "tauri-plugin-global-shortcut",
- "tokio",
-]
 
 [[package]]
 name = "num-conv"

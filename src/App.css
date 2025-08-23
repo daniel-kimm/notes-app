@@ -45,7 +45,8 @@ body {
 .app-container {
   width: 100%;
   height: 100vh;
-  backdrop-filter: blur(30px) brightness(1.1) contrast(1.1);
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(30px) brightness(1.1) contrast(1.1) !important;
   opacity: 1;
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -56,6 +57,18 @@ body {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+}
+
+/* PRODUCTION-SAFE: Maximum specificity override for all states */
+html body #root div.app-container,
+html body #root .app-container:focus,
+html body #root .app-container:focus-within,
+html body #root .app-container:active,
+html body #root .app-container:hover,
+html body #root .app-container.focused,
+html body #root .app-container[data-focused="true"] {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(30px) brightness(1.1) contrast(1.1) !important;
 }
 
 .drag-handle {
@@ -133,10 +146,28 @@ body {
   justify-content: center;
   gap: 8px;
   padding: 8px 16px;
-  background: rgba(248, 250, 252, 0.6);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.4);
-  backdrop-filter: blur(10px);
+  margin: 8px auto;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(20px) brightness(1.2) contrast(1.1) !important;
   animation: slideDown 0.2s ease-out;
+}
+
+/* PRODUCTION-SAFE: Formatting toolbar maximum specificity */
+html body #root .app-container div.formatting-toolbar,
+html body #root .app-container .formatting-toolbar:focus,
+html body #root .app-container .formatting-toolbar:hover,
+html body #root .app-container .formatting-toolbar:active {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(20px) brightness(1.2) contrast(1.1) !important;
 }
 
 @keyframes slideDown {
@@ -151,8 +182,8 @@ body {
 }
 
 .format-button {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(226, 232, 240, 0.3);
   padding: 6px 8px;
   border-radius: 6px;
   cursor: pointer;
@@ -166,7 +197,7 @@ body {
 }
 
 .format-button:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.4);
   border-color: #cbd5e1;
   color: #334155;
   transform: translateY(-1px);
@@ -492,7 +523,20 @@ kbd {
 
   .app-container {
     background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(30px) brightness(1.1) contrast(1.1) !important;
     border: 1px solid rgba(51, 65, 85, 0.12);
+  }
+
+  /* PRODUCTION-SAFE DARK MODE: Maximum specificity override */
+  html body #root div.app-container,
+  html body #root .app-container:focus,
+  html body #root .app-container:focus-within,
+  html body #root .app-container:active,
+  html body #root .app-container:hover,
+  html body #root .app-container.focused,
+  html body #root .app-container[data-focused="true"] {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(30px) brightness(1.1) contrast(1.1) !important;
   }
 
   .drag-handle {
@@ -526,18 +570,35 @@ kbd {
   }
 
   .formatting-toolbar {
-    background: rgba(248, 250, 252, 0.8);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(20px) brightness(1.2) contrast(1.1) !important;
+  }
+
+  /* PRODUCTION-SAFE DARK MODE: Formatting toolbar maximum specificity */
+  html body #root .app-container div.formatting-toolbar,
+  html body #root .app-container .formatting-toolbar:focus,
+  html body #root .app-container .formatting-toolbar:hover,
+  html body #root .app-container .formatting-toolbar:active {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(20px) brightness(1.2) contrast(1.1) !important;
   }
 
   .format-button {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(226, 232, 240, 0.3);
     color: #334155;
   }
 
   .format-button:hover {
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.4);
     border-color: #cbd5e1;
     color: #1e293b;
   }
